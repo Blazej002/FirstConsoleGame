@@ -4,13 +4,23 @@ namespace FirstConsoleGame
 {
     internal class Program
     {
-        private const int _roomWidth = 25;
-        private const int _roomHeight = 15;
+         
+        static int _roomWidth = 26;
+        static int _roomHeight = 17;
+        static int _newRoomVer = 5;
+        static int _newRoomHor = 24;
+        public int playerVertical = 1;
+        public int playerHorizontal = 1;
+
         static void Main(string[] args)
         {
             //Console.SetWindowSize(300, 200);
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
             int playerVertical = 1;
             int playerHorizontal = 1;
+            playerVertical = 6;
+
 
             while (true)
             {
@@ -22,28 +32,27 @@ namespace FirstConsoleGame
                 PlayerPositon(userInp, ref playerVertical, ref playerHorizontal);
                 Thread.Sleep(20);
             }
-            
         }
 
-        private static void PlayerPositon(ConsoleKey userInp,ref int playerVertical, ref int playerHorizontal)
+        private static void PlayerPositon(ConsoleKey userInp, ref int playerVertical, ref int playerHorizontal)
         {
             switch (userInp)
             {
                 case ConsoleKey.DownArrow:
-                    if (playerVertical == (_roomHeight - 1)) break;
+                    if (playerVertical == (_roomHeight - 2)) break;
                     playerVertical++;
                     break;
                 case ConsoleKey.UpArrow:
-                    if (playerVertical == 0 ) break;
+                    if (playerVertical == 1) break;
                     playerVertical--;
                     break;
 
                 case ConsoleKey.LeftArrow:
-                    if (playerHorizontal == 0) break;
+                    if (playerHorizontal == 1) break;
                     playerHorizontal--;
                     break;
                 case ConsoleKey.RightArrow:
-                    if (playerHorizontal == (_roomWidth - 1)) break;
+                    if (playerHorizontal == (_roomWidth - 2) & playerVertical != _newRoomVer) break;
                     playerHorizontal++;
                     break;
                 default:
@@ -60,15 +69,49 @@ namespace FirstConsoleGame
                 {
                     if (i == playerVertical & j == playerHorizontal)
                     {
-                        Console.Write("X");
+                        Console.Write("M");
+                        if (i != _newRoomVer) continue;
+
+                    }
+
+                    if (i == 0 || i == _roomHeight - 1)
+                    {
+                        Console.Write("-");
                         continue;
                     }
 
-                    Console.Write("@");
+                    if (i == 5 && j == _roomWidth - 1)
+                    {
+                        coridor();
+                        continue;
+                    }
+
+                    if (j == 0 || j == _roomWidth - 1)
+                    {
+                        Console.Write("|");
+                        continue;
+                    }
+
+                   
+                    
+                    Console.Write(".");
+                    
                 }
 
                 Console.WriteLine();
             }
+        }
+
+        private static void coridor()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Console.Write(".");
+            }
+        }
+
+        private static void newRoom()
+        {
         }
     }
 }

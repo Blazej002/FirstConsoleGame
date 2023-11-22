@@ -10,33 +10,34 @@ namespace FirstConsoleGame
         public static int _roomHeight = 17;
         public static int _newRoomVer = 5;
         public static int _newRoomHor = 24;
-        public int playerVertical = 1;
-        public int playerHorizontal = 1;
+    
 
         static void Main(string[] args)
         {
+            var player = new Player();
             //Console.SetWindowSize(300, 200);
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
-            int playerVertical = 1;
-            int playerHorizontal = 1;
-            playerVertical = 6;
+            int playerVertical = 2;
+            int playerHorizontal = 2;
+            playerVertical = 3;
             bool room1 = true;
 
             //room 1
             while (room1)
             {
-                playerVertical = StarterRoom(playerVertical, ref playerHorizontal, ref room1);
+                StarterRoom(ref playerVertical, ref playerHorizontal, ref room1, ref player);
             }
+
             Console.Clear();
             Console.WriteLine("Room one complete");
         }
 
-        private static int StarterRoom(int playerVertical, ref int playerHorizontal, ref bool room1)
+        private static void StarterRoom(ref int playerVertical, ref int playerHorizontal, ref bool room1, ref Player player)
         {
             Console.Clear();
-            Console.WriteLine($"Vertical : {playerVertical}");
-            Console.WriteLine($"Horizontal : {playerHorizontal}");
+            info(playerVertical, playerHorizontal, ref player);
+
             update(playerVertical, playerHorizontal);
             var userInp = Console.ReadKey().Key;
             PlayerPositon(userInp, ref playerVertical, ref playerHorizontal);
@@ -46,7 +47,13 @@ namespace FirstConsoleGame
             }
 
             Thread.Sleep(20);
-            return playerVertical;
+        }
+
+        private static void info(int playerVertical, int playerHorizontal,ref Player player)
+        {
+            Console.WriteLine($"Vertical : {playerVertical}");
+            Console.WriteLine($"Horizontal : {playerHorizontal}");
+            Console.WriteLine($"Hp: {player.hp}| | Has weapon: {player.hasWeapon} | | Dmg: {player.dmg}");
         }
 
         private static void PlayerPositon(ConsoleKey userInp, ref int playerVertical, ref int playerHorizontal)
@@ -75,6 +82,7 @@ namespace FirstConsoleGame
                     break;
             }
         }
+
 
         private static void update(int playerVertical, int playerHorizontal)
         {

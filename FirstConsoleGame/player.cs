@@ -1,9 +1,16 @@
 ﻿namespace FirstConsoleGame
 {
-    class player
+    class Player
     {
-        public int hp = 10;
-        public int sp = 8;
-        public bool hasNoWeapon = true;
+        public int hp;
+        public bool hasWeapon;
+        public int dmg;
+
+        public Player(int hp = 10, bool hasWeapon = false, int dmg = 1)
+        {
+            this.hp = hp;
+            this.hasWeapon = hasWeapon;
+            this.dmg = dmg;
+        }
     }
 }

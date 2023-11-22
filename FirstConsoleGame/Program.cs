@@ -4,14 +4,12 @@ namespace FirstConsoleGame
 {
     internal class Program
     {
-
         //test
 
-         
-        static int _roomWidth = 26;
-        static int _roomHeight = 17;
-        static int _newRoomVer = 5;
-        static int _newRoomHor = 24;
+        public static int _roomWidth = 26;
+        public static int _roomHeight = 17;
+        public static int _newRoomVer = 5;
+        public static int _newRoomHor = 24;
         public int playerVertical = 1;
         public int playerHorizontal = 1;
 
@@ -23,9 +21,10 @@ namespace FirstConsoleGame
             int playerVertical = 1;
             int playerHorizontal = 1;
             playerVertical = 6;
+            bool room1 = true;
 
-
-            while (true)
+            //room 1
+            while (room1)
             {
                 Console.Clear();
                 Console.WriteLine($"Vertical : {playerVertical}");
@@ -33,8 +32,14 @@ namespace FirstConsoleGame
                 update(playerVertical, playerHorizontal);
                 var userInp = Console.ReadKey().Key;
                 PlayerPositon(userInp, ref playerVertical, ref playerHorizontal);
+                if (playerHorizontal == 26 && playerVertical == 5 )
+                {
+                    room1 = false;
+                }
                 Thread.Sleep(20);
             }
+            Console.Clear();
+            Console.WriteLine("Room one complete");
         }
 
         private static void PlayerPositon(ConsoleKey userInp, ref int playerVertical, ref int playerHorizontal)
@@ -66,39 +71,44 @@ namespace FirstConsoleGame
 
         private static void update(int playerVertical, int playerHorizontal)
         {
-            for (int i = 0; i < _roomHeight; i++)
+            for (int ver = 0; ver < _roomHeight; ver++)
             {
-                for (int j = 0; j < _roomWidth; j++)
+                for (int hor = 0; hor < _roomWidth; hor++)
                 {
-                    if (i == playerVertical & j == playerHorizontal)
+                    if (ver == playerVertical & hor == playerHorizontal)
                     {
                         Console.Write("M");
-                        if (i != _newRoomVer) continue;
-
+                        if (ver != _newRoomVer) continue;
                     }
 
-                    if (i == 0 || i == _roomHeight - 1)
+                    if (ver == 0 || ver == _roomHeight - 1)
                     {
                         Console.Write("-");
                         continue;
                     }
 
-                    if (i == 5 && j == _roomWidth - 1)
+                    if (ver == 5 && hor == _roomWidth - 1)
                     {
                         coridor();
                         continue;
                     }
 
-                    if (j == 0 || j == _roomWidth - 1)
+                    if (hor == 0 || hor == _roomWidth - 1)
                     {
                         Console.Write("|");
                         continue;
                     }
 
-                   
-                    
+                    if ((ver == 10 && hor == 13))
+                    {
+                        Console.Write("s");
+                        Console.Write("\u2191");
+                        hor++;
+                        continue;
+                    }
+
+
                     Console.Write(".");
-                    
                 }
 
                 Console.WriteLine();

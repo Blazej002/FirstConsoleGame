@@ -26,20 +26,27 @@ namespace FirstConsoleGame
             //room 1
             while (room1)
             {
-                Console.Clear();
-                Console.WriteLine($"Vertical : {playerVertical}");
-                Console.WriteLine($"Horizontal : {playerHorizontal}");
-                update(playerVertical, playerHorizontal);
-                var userInp = Console.ReadKey().Key;
-                PlayerPositon(userInp, ref playerVertical, ref playerHorizontal);
-                if (playerHorizontal == 26 && playerVertical == 5 )
-                {
-                    room1 = false;
-                }
-                Thread.Sleep(20);
+                playerVertical = StarterRoom(playerVertical, ref playerHorizontal, ref room1);
             }
             Console.Clear();
             Console.WriteLine("Room one complete");
+        }
+
+        private static int StarterRoom(int playerVertical, ref int playerHorizontal, ref bool room1)
+        {
+            Console.Clear();
+            Console.WriteLine($"Vertical : {playerVertical}");
+            Console.WriteLine($"Horizontal : {playerHorizontal}");
+            update(playerVertical, playerHorizontal);
+            var userInp = Console.ReadKey().Key;
+            PlayerPositon(userInp, ref playerVertical, ref playerHorizontal);
+            if (playerHorizontal == 26 && playerVertical == 5)
+            {
+                room1 = false;
+            }
+
+            Thread.Sleep(20);
+            return playerVertical;
         }
 
         private static void PlayerPositon(ConsoleKey userInp, ref int playerVertical, ref int playerHorizontal)

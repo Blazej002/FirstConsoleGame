@@ -58,7 +58,7 @@ namespace FirstConsoleGame
             Thread.Sleep(20);
         }
 
-        private static void info(int playerVertical, int playerHorizontal,ref Player player)
+        public static void info(int playerVertical, int playerHorizontal,ref Player player)
         {
             Console.WriteLine($"Vertical : {playerVertical}");
             Console.WriteLine($"Horizontal : {playerHorizontal}");
@@ -71,6 +71,7 @@ namespace FirstConsoleGame
             {
                 //Nothing special here, takes player input and adds or subtracts values from player positon
                 case ConsoleKey.DownArrow:
+                    //The if statments are borders for where the player can walk
                     if (playerVertical == (_roomHeight - 2)) break;
                     playerVertical++;
                     break;
@@ -84,6 +85,7 @@ namespace FirstConsoleGame
                     playerHorizontal--;
                     break;
                 case ConsoleKey.RightArrow:
+                    //Same as other but with a exeption, the exeption is the coridor
                     if (playerHorizontal == (_roomWidth - 2) & playerVertical != _newRoomVer) break;
                     playerHorizontal++;
                     break;
@@ -102,31 +104,53 @@ namespace FirstConsoleGame
             {
                 for (int hor = 0; hor < _roomWidth; hor++)
                 {
-                    // Player being drawn
-                    if (ver == playerVertical & hor == playerHorizontal) { Console.Write("M"); if (ver != _newRoomVer) continue; }
-
-                    //Coridor hard coded.
-                    if (ver == 5 && hor == _roomWidth - 1) { coridor(); continue; }
-
-                    //Walls
-                    if (ver == 0 || ver == _roomHeight - 1) { Console.Write("-"); continue; }
-                    if (hor == 0 || hor == _roomWidth - 1) { Console.Write("|"); continue; }
-                    
-                    //Weapon, i need a way to pick it up
-                    if ((ver == 10 && hor == 13))
-                    {
-                        Console.Write("s");
-                        Console.Write("\u2191");
-                        hor++;
-                        continue;
-                    }
-
-
+                    // Extracted method
+                    if (Rules(playerVertical, playerHorizontal, ver, ref hor)) continue;
                     Console.Write(".");
                 }
 
                 Console.WriteLine();
             }
+        }
+        //Extracted method
+        private static bool Rules(int playerVertical, int playerHorizontal, int ver, ref int hor)
+        {
+            if (ver == playerVertical & hor == playerHorizontal)
+            {
+                Console.Write("M");
+                if (ver != _newRoomVer) return true;
+            }
+
+            //Coridor hard coded.
+            if (ver == 5 && hor == _roomWidth - 1)
+            {
+                coridor();
+                return true;
+            }
+
+            //Walls
+            if (ver == 0 || ver == _roomHeight - 1)
+            {
+                Console.Write("-");
+                return true;
+            }
+
+            if (hor == 0 || hor == _roomWidth - 1)
+            {
+                Console.Write("|");
+                return true;
+            }
+
+            //Weapon, i need a way to pick it up
+            if ((ver == 10 && hor == 13))
+            {
+                Console.Write("s");
+                Console.Write("\u2191");
+                hor++;
+                return true;
+            }
+
+            return false;
         }
 
         private static void coridor()

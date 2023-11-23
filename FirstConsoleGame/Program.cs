@@ -8,6 +8,8 @@ namespace FirstConsoleGame
 
         public static int _roomWidth = 26;
         public static int _roomHeight = 17;
+        
+        //Is only used to specify where the coridor to new room is
         public static int _newRoomVer = 5;
         public static int _newRoomHor = 24;
     
@@ -25,7 +27,8 @@ namespace FirstConsoleGame
 
             //room 1
             while (room1)
-            {
+            {   
+                //Draws the player and the room, Clears console and takes player input to find positon
                 StarterRoom(ref playerVertical, ref playerHorizontal, ref room1, ref player);
             }
 
@@ -36,11 +39,17 @@ namespace FirstConsoleGame
         private static void StarterRoom(ref int playerVertical, ref int playerHorizontal, ref bool room1, ref Player player)
         {
             Console.Clear();
+            //draws info like positon and player info like hp
             info(playerVertical, playerHorizontal, ref player);
 
+            //The draw player positon and room part of code
             update(playerVertical, playerHorizontal);
+
+            // Finds in player position
             var userInp = Console.ReadKey().Key;
             PlayerPositon(userInp, ref playerVertical, ref playerHorizontal);
+
+            //Checks if player has entered coridor
             if (playerHorizontal == 26 && playerVertical == 5)
             {
                 room1 = false;
@@ -60,6 +69,7 @@ namespace FirstConsoleGame
         {
             switch (userInp)
             {
+                //Nothing special here, takes player input and adds or subtracts values from player positon
                 case ConsoleKey.DownArrow:
                     if (playerVertical == (_roomHeight - 2)) break;
                     playerVertical++;
@@ -86,34 +96,23 @@ namespace FirstConsoleGame
 
         private static void update(int playerVertical, int playerHorizontal)
         {
+            //I think i should make the rooms thru objects
+            //I need to rework this whole part.
             for (int ver = 0; ver < _roomHeight; ver++)
             {
                 for (int hor = 0; hor < _roomWidth; hor++)
                 {
-                    if (ver == playerVertical & hor == playerHorizontal)
-                    {
-                        Console.Write("M");
-                        if (ver != _newRoomVer) continue;
-                    }
+                    // Player being drawn
+                    if (ver == playerVertical & hor == playerHorizontal) { Console.Write("M"); if (ver != _newRoomVer) continue; }
 
-                    if (ver == 0 || ver == _roomHeight - 1)
-                    {
-                        Console.Write("-");
-                        continue;
-                    }
+                    //Coridor hard coded.
+                    if (ver == 5 && hor == _roomWidth - 1) { coridor(); continue; }
 
-                    if (ver == 5 && hor == _roomWidth - 1)
-                    {
-                        coridor();
-                        continue;
-                    }
-
-                    if (hor == 0 || hor == _roomWidth - 1)
-                    {
-                        Console.Write("|");
-                        continue;
-                    }
-
+                    //Walls
+                    if (ver == 0 || ver == _roomHeight - 1) { Console.Write("-"); continue; }
+                    if (hor == 0 || hor == _roomWidth - 1) { Console.Write("|"); continue; }
+                    
+                    //Weapon, i need a way to pick it up
                     if ((ver == 10 && hor == 13))
                     {
                         Console.Write("s");
